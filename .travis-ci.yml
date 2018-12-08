@@ -15,4 +15,5 @@ install:
   - apt-get update && apt-get install postgresql-client -y
 
 script:
+  - go version
   - psql --version
