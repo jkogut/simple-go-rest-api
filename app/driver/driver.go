@@ -11,13 +11,14 @@ import (
 
 var db *sql.DB
 
-// "LogFatal" func for logging errors
+// LogFatal: func for logging errors
 func LogFatal(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
+// env init func
 func pgInit() {
 	gotenv.Load()
 }
