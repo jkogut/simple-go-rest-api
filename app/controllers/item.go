@@ -22,6 +22,22 @@ func apiLogger(rq *http.Request) {
 
 // Controller.GetItems: handle func for GET method (get all items)
 func (c Controller) GetItems(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, rq *http.Request) {
+		var item models.Item
+		items = []models.Item{}
+
+		rows, err := db.Query("select * from items")
+		driver.LogFatal(err)
+		defer rows.Close()
+
+		for rows.Next() {
+			err := rows.Scan(&item.ID, &item.Name1, &item.Name2, &item.Name3)
+			driver.LogFatal(err)
+			items = append(items, item)
+		}
+		json.NewEncoder(w).Encode(items)
+		apiLogger(rq)
+	}
 }
 
 // Controller.GetItem: handle func for GET method (get single item)
