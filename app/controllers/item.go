@@ -14,7 +14,7 @@ import (
 // Controller: data struct for handle functions
 type Controller struct{}
 
-var books []models.Book
+var items []models.Item
 
 func apiLogger(rq *http.Request) {
 	log.Println(rq.RemoteAddr, rq.RequestURI, rq.Method)
