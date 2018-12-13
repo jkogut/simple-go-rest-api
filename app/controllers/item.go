@@ -78,7 +78,7 @@ func (c Controller) UpdateItem(db *sql.DB) http.HandlerFunc {
 
 		json.NewDecoder(rq.Body).Decode(&item)
 
-		result, err := db.Exec("update items set anme1=$1, name2=$2, name3=$3 where id=$4 RETURNING id", &item.Name1, &item.Name2, &item.Name3, &item.ID)
+		result, err := db.Exec("update items set name1=$1, name2=$2, name3=$3 where id=$4 RETURNING id", &item.Name1, &item.Name2, &item.Name3, &item.ID)
 		driver.LogFatal(err)
 
 		rowsUpdated, err := result.RowsAffected()
