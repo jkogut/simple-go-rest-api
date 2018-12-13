@@ -42,6 +42,18 @@ func (c Controller) GetItems(db *sql.DB) http.HandlerFunc {
 
 // Controller.GetItem: handle func for GET method (get single item)
 func (c Controller) GetItem(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, rq *http.Request) {
+		var item models.Item
+		params := mux.Vars(rq)
+
+		row := db.QueryRow("select * from items where id=$1", params["id"])
+		err := row.Scan(&item.ID, &item.Name1, &item.Name2, &item.Name3)
+		driver.LogFatal(err)
+
+		// defer row.Close() ???
+		json.NewEncoder(w).Encode(item)
+		apiLogger(rq)
+	}
 }
 
 // Controller.AddItem: handle func for POST method (add single item)
