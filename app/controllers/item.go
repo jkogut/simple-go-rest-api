@@ -91,4 +91,16 @@ func (c Controller) UpdateItem(db *sql.DB) http.HandlerFunc {
 
 //Controller.RemoveItem: handle func for DELETE method (delete single item)
 func (c Controller) RemoveItem(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, rq *http.Request) {
+		params := mux.Vars(rq)
+
+		result, err := db.Exec("delete from items where id=$1", params["id"])
+		driver.LogFatal(err)
+
+		rowsDeleted, err := result.RowsAffected()
+		driver.LogFatal(err)
+
+		json.NewEncoder(w).Encode(rowsDeleted)
+		apiLogger(rq)
+	}
 }
