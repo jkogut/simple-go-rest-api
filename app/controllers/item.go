@@ -58,6 +58,17 @@ func (c Controller) GetItem(db *sql.DB) http.HandlerFunc {
 
 // Controller.AddItem: handle func for POST method (add single item)
 func (c Controller) AddItem(db *sql.DB) http.HandlerFunc {
+ 	return func(w http.ResponseWriter, rq *http.Request) {
+		var item models.Item
+		var itemID int
+
+		json.NewDecoder(rq.Body).Decode(&item)
+		//log.Println(item)
+		err := db.QueryRow("insert into items (name1, name2, name3) values ($1, $2, $3) RETURNING id", item.Name1, item.Name2, item.Name3).Scan(&itemID)
+		driver.LogFatal(err)
+		json.NewEncoder(w).Encode(itemID)
+		apiLogger(rq)
+	}
 }
 
 // Controller.UpdateItem: handle func for PUT method (update single item)
