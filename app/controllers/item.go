@@ -73,6 +73,20 @@ func (c Controller) AddItem(db *sql.DB) http.HandlerFunc {
 
 // Controller.UpdateItem: handle func for PUT method (update single item)
 func (c Controller) UpdateItem(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, rq *http.Request) {
+		var item models.Item
+
+		json.NewDecoder(rq.Body).Decode(&item)
+
+		result, err := db.Exec("update items set anme1=$1, name2=$2, name3=$3 where id=$4 RETURNING id", &item.Name1, &item.Name2, &item.Name3, &item.ID)
+		driver.LogFatal(err)
+
+		rowsUpdated, err := result.RowsAffected()
+		driver.LogFatal(err)
+
+		json.NewEncoder(w).Encode(rowsUpdated)
+		apiLogger(rq)
+	}
 }
 
 //Controller.RemoveItem: handle func for DELETE method (delete single item)
