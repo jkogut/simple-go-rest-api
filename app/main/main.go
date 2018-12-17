@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"app/controllers"
-	"app/driver"
-	"app/models"
+	"simple-go-rest-api/app/controllers"
+	"simple-go-rest-api/app/driver"
+	"simple-go-rest-api/app/models"
 	"log"
 	"net/http"
 
