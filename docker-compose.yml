@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db-service:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+         
+  rest-api-service:
+    build: ./app
+    volumes:
+      - ./app:/app
+    ports:
+      - 127.0.0.1:5002:5002
+    depends_on:
+      - db-service
