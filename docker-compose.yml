@@ -5,7 +5,9 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
-         
+    # ports:  ## uncomment for local debug
+    #   - 5432:5432
+      
   rest-api-service:
     build: ./app
     volumes:
