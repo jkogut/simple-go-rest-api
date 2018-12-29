@@ -2,17 +2,26 @@ package main
 
 import (
 	"database/sql"
+	"log"
+	"net/http"
+	"os"
 	"simple-go-rest-api/app/controllers"
 	"simple-go-rest-api/app/driver"
 	"simple-go-rest-api/app/models"
-	"log"
-	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
 var items []models.Item
 var db *sql.DB
+
+func port() string {
+	port := os.Getenv("PORT")
+	if len(port) == 0 {
+		port = "5002"
+	}
+	return ":" + port
+}
 
 func main() {
 
@@ -26,5 +35,5 @@ func main() {
 	router.HandleFunc("/items", controller.UpdateItem(db)).Methods("PUT")
 	router.HandleFunc("/items/{id}", controller.RemoveItem(db)).Methods("DELETE")
 
-	log.Fatal(http.ListenAndServe(":5002", router))
+	log.Fatal(http.ListenAndServe(port(), router))
 }
