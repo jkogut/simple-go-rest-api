@@ -3,10 +3,10 @@ package controllers
 import (
 	"database/sql"
 	"encoding/json"
-	"simple-go-rest-api/app/driver"
-	"simple-go-rest-api/app/models"
 	"log"
 	"net/http"
+	"simple-go-rest-api/driver"
+	"simple-go-rest-api/models"
 
 	"github.com/gorilla/mux"
 )
@@ -58,7 +58,7 @@ func (c Controller) GetItem(db *sql.DB) http.HandlerFunc {
 
 // Controller.AddItem : handle func for POST method (add single item)
 func (c Controller) AddItem(db *sql.DB) http.HandlerFunc {
- 	return func(w http.ResponseWriter, rq *http.Request) {
+	return func(w http.ResponseWriter, rq *http.Request) {
 		var item models.Item
 		var itemID int
 

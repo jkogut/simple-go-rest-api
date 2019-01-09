@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"simple-go-rest-api/app/controllers"
-	"simple-go-rest-api/app/driver"
-	"simple-go-rest-api/app/models"
+	"simple-go-rest-api/controllers"
+	"simple-go-rest-api/driver"
+	"simple-go-rest-api/models"
 
 	"github.com/gorilla/mux"
 )
