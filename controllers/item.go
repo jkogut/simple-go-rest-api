@@ -66,6 +66,7 @@ func (c Controller) AddBook(db *sql.DB) http.HandlerFunc {
 		//log.Println(book)
 		err := db.QueryRow("insert into books (title, author, year) values ($1, $2, $3) RETURNING id", book.Title, book.Author, book.Year).Scan(&bookID)
 		driver.LogFatal(err)
+
 		json.NewEncoder(w).Encode(bookID)
 		apiLogger(rq)
 	}
