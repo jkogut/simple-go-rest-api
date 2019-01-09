@@ -7,12 +7,10 @@ import (
 	"os"
 	"simple-go-rest-api/controllers"
 	"simple-go-rest-api/driver"
-	"simple-go-rest-api/models"
 
 	"github.com/gorilla/mux"
 )
 
-var books []models.Book
 var db *sql.DB
 
 func port() string {
