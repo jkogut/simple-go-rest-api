@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var items []models.Item
+var books []models.Book
 var db *sql.DB
 
 func port() string {
@@ -29,11 +29,11 @@ func main() {
 	router := mux.NewRouter()
 	controller := controllers.Controller{}
 
-	router.HandleFunc("/items", controller.GetItems(db)).Methods("GET")
-	router.HandleFunc("/items/{id}", controller.GetItem(db)).Methods("GET")
-	router.HandleFunc("/items", controller.AddItem(db)).Methods("POST")
-	router.HandleFunc("/items", controller.UpdateItem(db)).Methods("PUT")
-	router.HandleFunc("/items/{id}", controller.RemoveItem(db)).Methods("DELETE")
+	router.HandleFunc("/books", controller.GetBooks(db)).Methods("GET")
+	router.HandleFunc("/books/{id}", controller.GetBook(db)).Methods("GET")
+	router.HandleFunc("/books", controller.AddBook(db)).Methods("POST")
+	router.HandleFunc("/books", controller.UpdateBook(db)).Methods("PUT")
+	router.HandleFunc("/books/{id}", controller.RemoveBook(db)).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(port(), router))
 }
