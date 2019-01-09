@@ -1,7 +1,7 @@
 package models
 
-// Item : represents book item struct
-type Item struct {
+// Book : represents book struct
+type Book struct {
 	ID     int    `json:"id"`
 	Title  string `json:"title"`
 	Author string `json:"author"`
