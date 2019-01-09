@@ -14,71 +14,71 @@ import (
 // Controller : data struct for handle functions
 type Controller struct{}
 
-var items []models.Item
+var books []models.Book
 
 func apiLogger(rq *http.Request) {
 	log.Println(rq.RemoteAddr, rq.RequestURI, rq.Method)
 }
 
-// GetItems : handle func for GET method (get all items)
-func (c Controller) GetItems(db *sql.DB) http.HandlerFunc {
+// GetBooks : handle func for GET method (get all books)
+func (c Controller) GetBooks(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
-		var item models.Item
-		items = []models.Item{}
+		var book models.Book
+		books = []models.Book{}
 
-		rows, err := db.Query("select * from items")
+		rows, err := db.Query("select * from books")
 		driver.LogFatal(err)
 		defer rows.Close()
 
 		for rows.Next() {
-			err := rows.Scan(&item.ID, &item.Name1, &item.Name2, &item.Name3)
+			err := rows.Scan(&book.ID, &book.Name1, &book.Name2, &book.Name3)
 			driver.LogFatal(err)
-			items = append(items, item)
+			books = append(books, book)
 		}
-		json.NewEncoder(w).Encode(items)
+		json.NewEncoder(w).Encode(books)
 		apiLogger(rq)
 	}
 }
 
-// GetItem : handle func for GET method (get single item)
-func (c Controller) GetItem(db *sql.DB) http.HandlerFunc {
+// GetBook : handle func for GET method (get single book)
+func (c Controller) GetBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
-		var item models.Item
+		var book models.Book
 		params := mux.Vars(rq)
 
-		row := db.QueryRow("select * from items where id=$1", params["id"])
-		err := row.Scan(&item.ID, &item.Name1, &item.Name2, &item.Name3)
+		row := db.QueryRow("select * from books where id=$1", params["id"])
+		err := row.Scan(&book.ID, &book.Name1, &book.Name2, &book.Name3)
 		driver.LogFatal(err)
 
 		// defer row.Close() ???
-		json.NewEncoder(w).Encode(item)
+		json.NewEncoder(w).Encode(book)
 		apiLogger(rq)
 	}
 }
 
-// AddItem : handle func for POST method (add single item)
-func (c Controller) AddItem(db *sql.DB) http.HandlerFunc {
+// AddBook : handle func for POST method (add single book)
+func (c Controller) AddBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
-		var item models.Item
-		var itemID int
+		var book models.Book
+		var bookID int
 
-		json.NewDecoder(rq.Body).Decode(&item)
-		//log.Println(item)
-		err := db.QueryRow("insert into items (name1, name2, name3) values ($1, $2, $3) RETURNING id", item.Name1, item.Name2, item.Name3).Scan(&itemID)
+		json.NewDecoder(rq.Body).Decode(&book)
+		//log.Println(book)
+		err := db.QueryRow("insert into books (name1, name2, name3) values ($1, $2, $3) RETURNING id", book.Name1, book.Name2, book.Name3).Scan(&bookID)
 		driver.LogFatal(err)
-		json.NewEncoder(w).Encode(itemID)
+		json.NewEncoder(w).Encode(bookID)
 		apiLogger(rq)
 	}
 }
 
-// UpdateItem : handle func for PUT method (update single item)
-func (c Controller) UpdateItem(db *sql.DB) http.HandlerFunc {
+// UpdateBook : handle func for PUT method (update single book)
+func (c Controller) UpdateBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
-		var item models.Item
+		var book models.Book
 
-		json.NewDecoder(rq.Body).Decode(&item)
+		json.NewDecoder(rq.Body).Decode(&book)
 
-		result, err := db.Exec("update items set name1=$1, name2=$2, name3=$3 where id=$4 RETURNING id", &item.Name1, &item.Name2, &item.Name3, &item.ID)
+		result, err := db.Exec("update books set name1=$1, name2=$2, name3=$3 where id=$4 RETURNING id", &book.Name1, &book.Name2, &book.Name3, &book.ID)
 		driver.LogFatal(err)
 
 		rowsUpdated, err := result.RowsAffected()
@@ -89,12 +89,12 @@ func (c Controller) UpdateItem(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-// RemoveItem : handle func for DELETE method (delete single item)
-func (c Controller) RemoveItem(db *sql.DB) http.HandlerFunc {
+// RemoveBook : handle func for DELETE method (delete single book)
+func (c Controller) RemoveBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
 		params := mux.Vars(rq)
 
-		result, err := db.Exec("delete from items where id=$1", params["id"])
+		result, err := db.Exec("delete from books where id=$1", params["id"])
 		driver.LogFatal(err)
 
 		rowsDeleted, err := result.RowsAffected()
