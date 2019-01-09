@@ -9,9 +9,9 @@ services:
     #   - 5432:5432
       
   rest-api-service:
-    build: ./app
+    build: .
     volumes:
-      - ./app:/app
+      - .:/app
     ports:
       - 127.0.0.1:5002:5002
     depends_on:
