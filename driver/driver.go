@@ -11,7 +11,7 @@ import (
 
 var db *sql.DB
 
-// LogFatal: func for logging errors
+// LogFatal func for logging errors
 func LogFatal(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -23,7 +23,7 @@ func pgInit() {
 	gotenv.Load()
 }
 
-// ConnectDB: func for db connection init
+// ConnectDB func for db connection init
 func ConnectDB() *sql.DB {
 	pgInit()
 	pgURL, err := pq.ParseURL(os.Getenv("PG_URL"))

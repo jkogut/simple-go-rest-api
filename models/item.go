@@ -1,6 +1,6 @@
 package models
 
-// Book : represents book struct
+// Book represents book struct
 type Book struct {
 	ID     int    `json:"id"`
 	Title  string `json:"title"`

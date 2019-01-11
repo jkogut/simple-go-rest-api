@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Controller : data struct for handle functions
+// Controller data struct for handle functions
 type Controller struct{}
 
 var books []models.Book
@@ -20,7 +20,7 @@ func apiLogger(rq *http.Request) {
 	log.Println(rq.RemoteAddr, rq.RequestURI, rq.Method)
 }
 
-// GetBooks : handle func for GET method (get all books)
+// GetBooks handle func for GET method (get all books)
 func (c Controller) GetBooks(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
 		var book models.Book
@@ -40,7 +40,7 @@ func (c Controller) GetBooks(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-// GetBook : handle func for GET method (get single book)
+// GetBook handle func for GET method (get single book)
 func (c Controller) GetBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
 		var book models.Book
@@ -56,7 +56,7 @@ func (c Controller) GetBook(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-// AddBook : handle func for POST method (add single book)
+// AddBook handle func for POST method (add single book)
 func (c Controller) AddBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
 		var book models.Book
@@ -72,7 +72,7 @@ func (c Controller) AddBook(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-// UpdateBook : handle func for PUT method (update single book)
+// UpdateBook handle func for PUT method (update single book)
 func (c Controller) UpdateBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
 		var book models.Book
@@ -90,7 +90,7 @@ func (c Controller) UpdateBook(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-// RemoveBook : handle func for DELETE method (delete single book)
+// RemoveBook handle func for DELETE method (delete single book)
 func (c Controller) RemoveBook(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, rq *http.Request) {
 		params := mux.Vars(rq)
