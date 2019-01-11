@@ -11,7 +11,7 @@ services:
   rest-api-service:
     build: .
     volumes:
-      - .:/app
+      - .:/simple-go-rest-api
     ports:
       - 127.0.0.1:5002:5002
     depends_on:
