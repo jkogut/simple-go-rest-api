@@ -30,7 +30,10 @@ func ConnectDB() *sql.DB {
 	log.Println(pgURL)
 	LogFatal(err)
 
-	db, err = sql.Open("postgres", pgURL)
+	pgDB := os.Getenv("PG_DB")
+	log.Println(pgDB)
+
+	db, err = sql.Open(pgDB, pgURL)
 	LogFatal(err)
 
 	err = db.Ping()
