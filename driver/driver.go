@@ -27,11 +27,11 @@ func pgInit() {
 func ConnectDB() *sql.DB {
 	pgInit()
 	pgURL, err := pq.ParseURL(os.Getenv("PG_URL"))
-	log.Println(pgURL)
+	log.Println("exported PG_URL from .env:", pgURL)
 	LogFatal(err)
 
 	pgDB := os.Getenv("PG_DB")
-	log.Println(pgDB)
+	log.Println("exported PG_DB from .env:", pgDB)
 
 	db, err = sql.Open(pgDB, pgURL)
 	LogFatal(err)
